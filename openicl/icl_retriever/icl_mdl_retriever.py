@@ -86,7 +86,7 @@ class MDLRetriever(TopkRetriever):
             mdl_scores = []
             for j in range(self.select_time):
                 if j == 0:
-                    rand_idx_list = near_ids[:self.ice_num] # 일단 기본적으로 top-n은 넣어준다.
+                    rand_idx_list = near_ids[:self.ice_num]
                 else:
                     rand_idx_list = np.random.choice(near_ids, self.ice_num, replace=False)
                     rand_idx_list = [int(i) for i in rand_idx_list]
@@ -100,10 +100,10 @@ class MDLRetriever(TopkRetriever):
                     labels = self.labels
                 prompt_list = []
                 for label in labels:
-                    prompt = self.generate_label_prompt(idx, ice, label, self.ice_template, self.prompt_template) # 각 label에 대한 cross-entropy loss 계산
+                    prompt = self.generate_label_prompt(idx, ice, label, self.ice_template, self.prompt_template)
                     prompt_list.append(prompt)
                 loss_list = self.cal_ce(prompt_list, mask_length=mask_length)
-                probs = np.exp(-np.array(loss_list)) # 각 label에 대한 NLL로 다시 prob dist. 계산
+                probs = np.exp(-np.array(loss_list))
                 normalized_probs = probs / probs.sum(0, keepdims=True)
                 neg_entropy = -entropy(normalized_probs, label_dim=0)
                 mdl_scores.append(neg_entropy)

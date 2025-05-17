@@ -72,7 +72,6 @@ class TopicKRetriever(TopkRetriever):
         self.weight_rel = weight_rel
 
         topic_knowledge = score_mat_2_rank_mat(torch.FloatTensor(np.clip(topic_knowledge, 0.1, 0.9)), self.weight_ens)
-        # topic_knowledge = torch.FloatTensor(np.clip(topic_knowledge, 0.1, 0.9))
         self.topic_knowledge = torch.tensor(topic_knowledge, dtype=torch.float32).cuda() # p(t): [T]
         self.query_clf_logit = query_clf_logit  ## exp p(t|d): [D, T]
 

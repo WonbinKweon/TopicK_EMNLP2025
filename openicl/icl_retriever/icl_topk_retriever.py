@@ -59,12 +59,12 @@ class TopkRetriever(BaseRetriever):
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.batch_size = batch_size
         self.tokenizer_name = tokenizer_name
-        gen_datalist = self.dataset_reader.generate_input_field_corpus(self.test_ds) ## why test_ds?? -> index_ds는 creat_index()에서 처리
+        gen_datalist = self.dataset_reader.generate_input_field_corpus(self.test_ds)
 
         self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
         self.tokenizer.pad_token = self.tokenizer.eos_token
         self.tokenizer.pad_token_id = self.tokenizer.eos_token_id
-        self.tokenizer.padding_side = "right" ### why??
+        self.tokenizer.padding_side = "right"
 
         self.encode_dataset = DatasetEncoder(gen_datalist, tokenizer=self.tokenizer)
         co = DataCollatorWithPaddingAndCuda(tokenizer=self.tokenizer, device=self.device)
@@ -97,7 +97,6 @@ class TopkRetriever(BaseRetriever):
             idx = entry['metadata']['id']
             embed = np.expand_dims(entry['embed'], axis=0)
             near_ids = self.index.search(embed, ice_num)[1][0].tolist()
-            # near_ids = self.index.search(embed, 30)[1][0].tolist()[-ice_num:] #[::-1]
             rtr_idx_list[idx] = near_ids
         return rtr_idx_list
 

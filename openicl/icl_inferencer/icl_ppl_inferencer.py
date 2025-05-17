@@ -95,9 +95,6 @@ class PPLInferencer(BaseInferencer):
                 prompt = retriever.generate_label_prompt(idx, ice[idx], label, ice_template=ice_template,
                                                          prompt_template=prompt_template,
                                                          remain_sep=normalizing_str is not None)
-                # if switch == 0:
-                #     print(prompt)
-                #     switch = 1
                 
                 if self.max_model_token_num is not None and self.api_name != 'gpt3':
                     prompt_token_num = self.get_input_token_num(prompt)
@@ -133,9 +130,6 @@ class PPLInferencer(BaseInferencer):
             logger.info(f"Calculating PPL for prompts labeled '{label}'")
             for idx in trange(0, len(prompt_list), self.batch_size, disable=not self.is_main_process):
                 sub_prompt_list = prompt_list[idx:idx + self.batch_size]
-                # if switch == 0:
-                #     print(sub_prompt_list)
-                #     switch = 1
                 if normalizing_str is not None:
                     sub_context_length_list = context_length_list[idx:idx + self.batch_size]
                     sub_normalizing_prompt_list = normalizing_prompt_list[idx:idx + self.batch_size]

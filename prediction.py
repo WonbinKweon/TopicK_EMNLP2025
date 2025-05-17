@@ -11,7 +11,7 @@ dir1 = 'result/'
 dataset_path = 'data/'
  
 task_names = ["cms"]
-model_names = ['meta-llama/Llama-3.2-1B-Instruct', 'meta-llama/Llama-3.2-3B-Instruct', 'Qwen/Qwen2.5-0.5B-Instruct']
+model_names = ['meta-llama/Llama-3.2-3B-Instruct']
 seeds = [1]
 
 for task_name in task_names:
@@ -24,7 +24,6 @@ for task_name in task_names:
         train_path = dataset_path + task_name + '/train.jsonl'
         test_name = test_split[task_name]
         test_path = dataset_path + task_name + '/' + test_name + '.jsonl'
-        # test_path = dataset_path + task_name + '/train.jsonl'
 
         combined_dataset = load_dataset("json", data_files={"train": train_path, "test": test_path})
 
@@ -36,8 +35,6 @@ for task_name in task_names:
     
         prediction_dir = dir1 + model_name + '/' + task_name
         if os.path.exists(prediction_dir) and os.path.isdir(prediction_dir):
-        #     print('\n#########################  task_name: {}  #########################\n'.format(task_name))
-
             file_checked = []
             for k in [8]:
                 best = 0
