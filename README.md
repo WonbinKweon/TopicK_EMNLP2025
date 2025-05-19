@@ -1,4 +1,4 @@
-Anonymous repository for TopicK (ARR May submission).
+**Anonymous repository for TopicK (ARR May submission)**
 
 Please follow the steps below to run the code:
 
@@ -10,3 +10,6 @@ Please follow the steps below to run the code:
 
 3. python prediction.py
 - This is for evaluation.
+
+Due to size constraints, only the smallest dataset is included in this repository.\
+The remaining datasets will be shared via external drives in the public release.
